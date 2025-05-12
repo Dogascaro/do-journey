@@ -1,2 +1,2 @@
-https://dogascaro.github.io/do-journey/
+https://dogascaro.github.io/do-journey/ - 
 https://do-journey.vercel.app/
