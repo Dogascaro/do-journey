@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DO Journey</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="logo-center">
+          <img
+            src="https://iili.io/38g3HQI.png"
+            alt="Logo Utama"
+            class="logo logo-static"
+          />
+        </div>
+        <div class="user-section">
+          <span id="username-display"></span>
+          <button onclick="logout()" class="logout-btn">Keluar</button>
+        </div>
+      </div>
+
+      <div class="app-container">
+        <div class="input-section">
+          <div class="input-wrapper">
+            <input type="text" id="judul" placeholder=" " required />
+            <label for="judul">Judul catatan</label>
+          </div>
+          <div class="input-wrapper">
+            <input type="date" id="tanggal" required />
+            <label for="tanggal">Tanggal</label>
+          </div>
+          <div class="lokasi-input">
+            <div class="input-wrapper" style="flex: 1; margin-bottom: 0">
+              <input type="text" id="lokasi" placeholder=" " />
+              <label for="lokasi">Lokasi</label>
+            </div>
+            <button type="button" onclick="deteksiLokasi()" class="lokasi-btn">
+              <i class="material-icons">location_on</i> Deteksi
+            </button>
+          </div>
+          <div class="kategori-section">
+            <select id="kategori" required>
+              <option value="">Pilih Kategori</option>
+            </select>
+            <button type="button" id="tambahKategoriBtn">+</button>
+          </div>
+          <div class="input-wrapper">
+            <textarea id="isi" placeholder=" " required></textarea>
+            <label for="isi">Isi catatan</label>
+          </div>
+          <button onclick="tambahCatatan()">
+            <i class="material-icons">add</i> Tambah Catatan
+          </button>
+        </div>
+
+        <div class="filter-section">
+          <select id="urutkan" onchange="urutkanCatatan()">
+            <option value="terbaru">Terbaru</option>
+            <option value="terlama">Terlama</option>
+            <option value="judul">Judul</option>
+            <option value="lokasi">Lokasi</option>
+          </select>
+          <select id="filter-kategori" onchange="filterKategori()">
+            <option value="semua">Semua Kategori</option>
+          </select>
+          <button class="hapus-kategori-btn" onclick="hapusKategoriTerpilih()">
+            <i class="material-icons">delete</i>
+          </button>
+        </div>
+
+        <div id="daftar-catatan"></div>
+      </div>
+    </div>
+
+    <div class="bottom-nav">
+      <div class="nav-item" onclick="toggleInputSection(true)">
+        <i class="material-icons nav-icon">add_circle</i>
+        <span>Tambah</span>
+      </div>
+      <div class="nav-item active" onclick="toggleInputSection(false)">
+        <i class="material-icons nav-icon">list</i>
+        <span>Daftar</span>
+      </div>
+      <div class="nav-item" onclick="tampilkanInfoAplikasi()">
+        <i class="material-icons nav-icon">info</i>
+        <span>Info</span>
+      </div>
+    </div>
+
+    <div id="modal-kategori" class="modal">
+      <div class="modal-content">
+        <h3>Buat Kategori Baru</h3>
+        <div class="input-wrapper">
+          <input type="text" id="kategori-baru" placeholder=" " />
+          <label for="kategori-baru">Nama kategori baru</label>
+        </div>
+        <div class="modal-buttons">
+          <button type="button" class="tambah-kategori-btn">Simpan</button>
+          <button type="button" class="batal-kategori-btn">Batal</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal-info-aplikasi" class="modal">
+      <div class="modal-content">
+        <h3>Tentang DO Journey</h3>
+        <div class="app-info">
+          <div class="app-logo">
+            <img
+              src="https://iili.io/38g3HQI.png"
+              alt="Logo Aplikasi"
+              class="info-logo"
+            />
+            <h4>DO Journey</h4>
+            <p>Versi 1.0</p>
+          </div>
+          <div class="developer-info">
+            <p>Dibuat oleh Developer Indonesia</p>
+            <p>© 2025 Hak Cipta Dilindungi</p>
+          </div>
+          <div class="social-links">
+            <a
+              href="https://www.facebook.com/rido.hasbi.3"
+              target="_blank"
+              class="social-link"
+            >
+              <i class="material-icons">facebook</i>
+              <span>Facebook</span>
+            </a>
+            <a
+              href="https://instagram.com/do.hasbi"
+              target="_blank"
+              class="social-link"
+            >
+              <i class="material-icons">photo_camera</i>
+              <span>Instagram</span>
+            </a>
+            <a
+              href="https://www.youtube.com/@mondo_31"
+              target="_blank"
+              class="social-link"
+            >
+              <i class="material-icons">play_circle_filled</i>
+              <span>YouTube</span>
+            </a>
+            <a
+              href="https://github.com/Dogascaro"
+              target="_blank"
+              class="social-link"
+            >
+              <i class="material-icons">code</i>
+              <span>GitHub</span>
+            </a>
+            <a href="mailto:dogascaro@gmail.com" class="social-link">
+              <i class="material-icons">email</i>
+              <span>Email</span>
+            </a>
+            <a
+              href="https://wa.me/6282111111111"
+              target="_blank"
+              class="social-link"
+            >
+              <i class="material-icons">phone</i>
+              <span>WhatsApp</span>
+            </a>
+          </div>
+        </div>
+        <div class="modal-buttons">
+          <button type="button" class="tutup-btn" onclick="tutupInfoAplikasi()">
+            Tutup
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="loading-overlay" class="loading-overlay">
+      <div class="loading-content">
+        <img
+          src="https://i.ibb.co/Y7GxFWbH/animated-output.gif"
+          alt="Loading"
+          class="loading-img"
+        />
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+      const logo = document.querySelector(".logo-static");
+      let isExiting = false;
+
+      logo.addEventListener("mouseenter", () => {
+        if (!isExiting) {
+          isExiting = true;
+          logo.classList.add("exit");
+        }
+      });
+
+      logo.addEventListener("animationend", (event) => {
+        if (event.animationName === "logoExit") {
+          setTimeout(() => {
+            logo.classList.remove("exit");
+            logo.style.opacity = "0";
+            requestAnimationFrame(() => {
+              logo.style.opacity = "";
+              isExiting = false;
+            });
+          }, 100);
+        }
+      });
+
+      // Cek status login
+      function checkLogin() {
+        const isLoggedIn = localStorage.getItem("isLoggedIn");
+        if (!isLoggedIn) {
+          window.location.href = "login.html";
+        } else {
+          const username = localStorage.getItem("username");
+          document.getElementById("username-display").textContent = username;
+        }
+      }
+
+      // Fungsi logout
+      function logout() {
+        localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("username");
+        window.location.href = "login.html";
+      }
+
+      // Fungsi toggle input section
+      function toggleInputSection(showInput) {
+        const inputSection = document.querySelector(".input-section");
+        const navItems = document.querySelectorAll(".nav-item");
+
+        if (showInput) {
+          inputSection.classList.remove("hidden");
+          navItems.forEach((item) => item.classList.remove("active"));
+          navItems[0].classList.add("active");
+          window.scrollTo(0, 0);
+        } else {
+          inputSection.classList.add("hidden");
+          navItems.forEach((item) => item.classList.remove("active"));
+          navItems[1].classList.add("active");
+        }
+      }
+
+      // Panggil checkLogin saat halaman dimuat
+      document.addEventListener("DOMContentLoaded", function () {
+        checkLogin();
+
+        // Set tanggal hari ini secara default
+        const today = new Date().toISOString().split("T")[0];
+        document.getElementById("tanggal").value = today;
+
+        // Tombol tutup untuk modal kelola kategori
+        document
+          .querySelector(".tutup-btn")
+          .addEventListener("click", function () {
+            document
+              .getElementById("modal-info-aplikasi")
+              .classList.remove("active");
+          });
+      });
+    </script>
+  </body>
+</html>
